@@ -1,20 +1,19 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Box from '@mui/material/Box';
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Box from "@mui/material/Box";
 
 function Dashboard() {
   const [tickets, setTickets] = useState([]);
@@ -29,7 +28,7 @@ function Dashboard() {
 
   useEffect(() => {
     fetchTickets();
-    const interval = setInterval(fetchTickets, 5000); // auto-refresh every 5 sec
+    const interval = setInterval(fetchTickets, 5000);
     return () => clearInterval(interval);
   }, [statusFilter]);
 
@@ -76,7 +75,9 @@ function Dashboard() {
                 <TableCell>{ticket.issue}</TableCell>
                 <TableCell>{ticket.priority}</TableCell>
                 <TableCell>{ticket.status}</TableCell>
-                <TableCell>{new Date(ticket.createdAt).toLocaleString()}</TableCell>
+                <TableCell>
+                  {new Date(ticket.createdAt).toLocaleString()}
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
@@ -103,7 +104,6 @@ function Dashboard() {
           </TableBody>
         </Table>
       </TableContainer>
-
     </Box>
   );
 }

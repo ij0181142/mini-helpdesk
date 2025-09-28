@@ -6,14 +6,13 @@ const Ticket = require("./models/Ticket");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
-
 const dbUrl = process.env.MONGODB_URI;
 const app = express();
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   crypto: {
-    secret: "mysupersecretcode",
+    secret: process.env.SECRET,
   },
   touchAfter: 24 * 3600,
 });
@@ -24,12 +23,12 @@ store.on("error", (err) => {
 
 const sessionOptions = {
   store,
-  secret: "mysupersecretcode",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days from now
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
   },
 };
@@ -38,7 +37,6 @@ app.use(session(sessionOptions));
 app.use(cors());
 app.use(express.json());
 
-// Connect MongoDB (make sure MongoDB is running locally)
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -47,7 +45,6 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
-// Routes
 app.get("/tickets", async (req, res) => {
   const { status } = req.query;
   let filter = {};

@@ -70,7 +70,6 @@ form button:hover {
   background-color: #0056b3;
 }
 
-/* Dashboard table styling */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -93,7 +92,6 @@ th {
   color: white;
 }
 
-/* Action buttons */
 button.status-btn {
   margin-right: 5px;
   padding: 5px 10px;
@@ -121,7 +119,6 @@ button.close:hover {
   background-color: #c82333;
 }
 
-/* Filter dropdown */
 select {
   padding: 5px 8px;
   margin-bottom: 10px;
