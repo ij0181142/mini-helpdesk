@@ -1,8 +1,14 @@
-// Session and Mongo Store setup
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const Ticket = require("./models/Ticket");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+
 
 const dbUrl = process.env.MONGODB_URI;
+const app = express();
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,
@@ -22,20 +28,13 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: true,
   cookie: {
-    expires: Date.now() + 7*24*60*60*1000, // 7 days from now
-    maxAge: 7*24*60*60*1000, // 7 days
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days from now
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     httpOnly: true,
   },
 };
 
 app.use(session(sessionOptions));
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const Ticket = require("./models/Ticket");
-
-const app = express();
 app.use(cors());
 app.use(express.json());
 
