@@ -1,3 +1,34 @@
+// Session and Mongo Store setup
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
+const dbUrl = process.env.MONGODB_URI;
+
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: "mysupersecretcode",
+  },
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", (err) => {
+  console.log("ERROR in MONGO SESSION STORE", err);
+});
+
+const sessionOptions = {
+  store,
+  secret: "mysupersecretcode",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7*24*60*60*1000, // 7 days from now
+    maxAge: 7*24*60*60*1000, // 7 days
+    httpOnly: true,
+  },
+};
+
+app.use(session(sessionOptions));
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
