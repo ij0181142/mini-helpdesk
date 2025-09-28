@@ -15,12 +15,14 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Box from "@mui/material/Box";
 
-function Dashboard({ apiUrl }) {
+function Dashboard() {
   const [tickets, setTickets] = useState([]);
   const [statusFilter, setStatusFilter] = useState("All");
 
   const fetchTickets = async () => {
-    const res = await axios.get(`${apiUrl}/tickets?status=${statusFilter}`);
+    const res = await axios.get(
+      `http://localhost:5000/tickets?status=${statusFilter}`
+    );
     setTickets(res.data);
   };
 
@@ -31,7 +33,7 @@ function Dashboard({ apiUrl }) {
   }, [statusFilter]);
 
   const updateStatus = async (id, status) => {
-    await axios.patch(`${apiUrl}/tickets/${id}`, { status });
+    await axios.patch(`http://localhost:5000/tickets/${id}`, { status });
     fetchTickets();
   };
 

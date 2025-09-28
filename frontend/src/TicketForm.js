@@ -8,7 +8,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
-function TicketForm({ username, apiUrl }) {
+function TicketForm({ username }) {
   const [form, setForm] = useState({
     name: username || "",
     issue: "",
@@ -20,7 +20,7 @@ function TicketForm({ username, apiUrl }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(`${apiUrl}/tickets`, form);
+    await axios.post("http://localhost:5000/tickets", form);
     setForm({ name: "", issue: "", priority: "Low" });
     alert("Ticket submitted!");
   };

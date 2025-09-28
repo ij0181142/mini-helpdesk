@@ -9,7 +9,6 @@ import UserPanel from "./UserPanel";
 import AdminPanel from "./AdminPanel";
 
 function App() {
-  const API = process.env.REACT_APP_API_URL;
   const [role, setRole] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [userSubmitted, setUserSubmitted] = React.useState(false);
@@ -144,13 +143,11 @@ function App() {
                 Go to Admin Panel
               </Button>
             </Box>
-            <TicketForm username={username} apiUrl={API} />
-            <Dashboard apiUrl={API} />
+            <UserPanel username={username} />
           </>
         )}
         {role === "admin" && (
           <AdminPanel
-            apiUrl={API}
             onGoToUserPanel={() => {
               setRole("user");
               setUserSubmitted(false);
