@@ -1,8 +1,17 @@
+
 import React, { useState } from "react";
 import axios from "axios";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
-function TicketForm() {
-  const [form, setForm] = useState({ name: "", issue: "", priority: "Low" });
+
+function TicketForm({ username }) {
+  const [form, setForm] = useState({ name: username || "", issue: "", priority: "Low" });
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -15,28 +24,52 @@ function TicketForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        name="name"
-        value={form.name}
-        onChange={handleChange}
-        placeholder="Your Name"
-        required
-      />
-      <input
+    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 4 }}>
+      {!username && (
+        <TextField
+          name="name"
+          label="Your Name"
+          value={form.name}
+          onChange={handleChange}
+          required
+          variant="outlined"
+        />
+      )}
+      {username && (
+        <TextField
+          name="name"
+          label="Your Name"
+          value={form.name}
+          InputProps={{ readOnly: true }}
+          variant="outlined"
+        />
+      )}
+      <TextField
         name="issue"
+        label="Issue"
         value={form.issue}
         onChange={handleChange}
-        placeholder="Issue"
         required
+        variant="outlined"
       />
-      <select name="priority" value={form.priority} onChange={handleChange}>
-        <option>Low</option>
-        <option>Medium</option>
-        <option>High</option>
-      </select>
-      <button type="submit">Submit Ticket</button>
-    </form>
+      <FormControl variant="outlined">
+        <InputLabel id="priority-label">Priority</InputLabel>
+        <Select
+          labelId="priority-label"
+          name="priority"
+          value={form.priority}
+          onChange={handleChange}
+          label="Priority"
+        >
+          <MenuItem value="Low">Low</MenuItem>
+          <MenuItem value="Medium">Medium</MenuItem>
+          <MenuItem value="High">High</MenuItem>
+        </Select>
+      </FormControl>
+      <Button type="submit" variant="contained" color="primary">
+        Submit Ticket
+      </Button>
+    </Box>
   );
 }
 

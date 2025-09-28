@@ -1,5 +1,20 @@
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Box from '@mui/material/Box';
 
 function Dashboard() {
   const [tickets, setTickets] = useState([]);
@@ -24,62 +39,72 @@ function Dashboard() {
   };
 
   return (
-    <div>
-      <h2>Tickets Dashboard</h2>
-
-      <label>Filter by Status: </label>
-      <select
-        value={statusFilter}
-        onChange={(e) => setStatusFilter(e.target.value)}
-      >
-        <option>All</option>
-        <option>Open</option>
-        <option>In Progress</option>
-        <option>Closed</option>
-      </select>
-
-      <table border="1" cellPadding="5" style={{ marginTop: "10px" }}>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Issue</th>
-            <th>Priority</th>
-            <th>Status</th>
-            <th>Created At</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tickets.map((t) => (
-            <tr key={t._id}>
-              <td>{t.name}</td>
-              <td>{t.issue}</td>
-              <td>{t.priority}</td>
-              <td>{t.status}</td>
-              <td>{new Date(t.createdAt).toLocaleString()}</td>
-              <td>
-                {t.status !== "Closed" && (
-                  <button
-                    className="status-btn in-progress"
-                    onClick={() => updateStatus(t._id, "In Progress")}
+    <Box>
+      <Typography variant="h5" sx={{ mb: 2 }}>
+        Tickets Dashboard
+      </Typography>
+      <FormControl sx={{ minWidth: 180, mb: 2 }} size="small">
+        <InputLabel id="status-filter-label">Filter by Status</InputLabel>
+        <Select
+          labelId="status-filter-label"
+          value={statusFilter}
+          label="Filter by Status"
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <MenuItem value="All">All</MenuItem>
+          <MenuItem value="Open">Open</MenuItem>
+          <MenuItem value="In Progress">In Progress</MenuItem>
+          <MenuItem value="Closed">Closed</MenuItem>
+        </Select>
+      </FormControl>
+      <TableContainer component={Paper} sx={{ mt: 2 }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Issue</TableCell>
+              <TableCell>Priority</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Created At</TableCell>
+              <TableCell>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {tickets.map((ticket) => (
+              <TableRow key={ticket._id}>
+                <TableCell>{ticket.name}</TableCell>
+                <TableCell>{ticket.issue}</TableCell>
+                <TableCell>{ticket.priority}</TableCell>
+                <TableCell>{ticket.status}</TableCell>
+                <TableCell>{new Date(ticket.createdAt).toLocaleString()}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    sx={{ mr: 1 }}
+                    disabled={ticket.status === "Closed"}
+                    onClick={() => updateStatus(ticket._id, "In Progress")}
                   >
                     In Progress
-                  </button>
-                )}
-                {t.status !== "Closed" && (
-                  <button
-                    className="status-btn close"
-                    onClick={() => updateStatus(t._id, "Closed")}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    size="small"
+                    disabled={ticket.status === "Closed"}
+                    onClick={() => updateStatus(ticket._id, "Closed")}
                   >
                     Close
-                  </button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+    </Box>
   );
 }
 
