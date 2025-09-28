@@ -7,13 +7,16 @@ Built with **MERN stack (MongoDB, Express, React, Node.js)**.
 
 ## Features
 
-- Submit new tickets with **Name, Issue, and Priority**.
-- Dashboard to view all tickets in a table.
-- **Auto-refresh every 5 seconds** (no WebSocket needed).
-- Filter tickets by **status** (All / Open / In Progress / Closed).
+- Modern UI built with Material-UI for a professional look.
+- Role selection screen: choose User or Admin panel on startup.
+- User login panel: enter your name to access the user panel.
+- User panel: submit new tickets with Name, Issue, and Priority.
+- Admin panel: fixed navbar and navigation button for switching panels.
+- Dashboard: view all tickets in a table, filter by status (All / Open / In Progress / Closed).
+- Auto-refresh every 5 seconds (no WebSocket needed).
 - Admin can update ticket status.
-- Tickets sorted by **latest createdAt**.
-- Data stored in **MongoDB**.
+- Tickets sorted by latest createdAt.
+- Data stored in MongoDB.
 
 ---
 
@@ -36,28 +39,40 @@ mini-helpdesk/
 │
 └── README.md # Project guide (this file)
 
-# Start Backend
+---
 
-cd backend
-npm install
-node server.js
+## Setup Instructions
 
-Backend runs on http://localhost:5000
-Make sure MongoDB is running locally.
-for confermation run mongod
+1. **Install dependencies**
+   - In both `backend` and `frontend` folders, run:
+     ```bash
+     npm install
+     ```
+2. **Start servers**
+   - Backend: `node server.js` (from the `backend` folder)
+   - Frontend: `npm start` (from the `frontend` folder)
+3. **Open the app**
+   - Visit `http://localhost:3000` in your browser
 
-Test it: open http://localhost:5000/tickets
-→ should return [].
+---
 
-# Start Frontend
+## Usage
 
-In a new terminal:
+1. On startup, select your panel (User or Admin).
+2. If User Panel is selected, enter your name and click Login.
+3. Submit tickets from the user panel.
+4. Admins can view, filter, and update tickets in the dashboard.
+5. Switch between panels using the navigation buttons.
 
-cd frontend
-npm install
-npm start
+---
 
-Frontend runs on http://localhost:3000
+## Tech Stack
+
+- React
+- Material-UI
+- Node.js
+- Express
+- MongoDB
 
 # How to Use
 
@@ -82,14 +97,6 @@ Go to the app at http://localhost:3000.
 - Auto-refresh uses setInterval (5 sec) instead of WebSockets.
 
 - UI is basic (focus is on functionality, not design).
-
-# Tech Stack
-
-- Frontend: React + Axios
-
-- Backend: Node.js + Express
-
-- Database: MongoDB
 
 # If you see Network Error in React, check:
 
