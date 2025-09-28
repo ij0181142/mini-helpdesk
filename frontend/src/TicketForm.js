@@ -1,30 +1,36 @@
-
 import React, { useState } from "react";
 import axios from "axios";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
-
-function TicketForm({ username }) {
-  const [form, setForm] = useState({ name: username || "", issue: "", priority: "Low" });
+function TicketForm({ username, apiUrl }) {
+  const [form, setForm] = useState({
+    name: username || "",
+    issue: "",
+    priority: "Low",
+  });
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:5000/tickets", form);
+    await axios.post(`${apiUrl}/tickets`, form);
     setForm({ name: "", issue: "", priority: "Low" });
     alert("Ticket submitted!");
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 4 }}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{ display: "flex", flexDirection: "column", gap: 2, mb: 4 }}
+    >
       {!username && (
         <TextField
           name="name"
