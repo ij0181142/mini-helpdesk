@@ -9,7 +9,7 @@ app.use(express.json());
 
 // Connect MongoDB (make sure MongoDB is running locally)
 mongoose
-  .connect("mongodb://127.0.0.1:27017/helpdesk", {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
