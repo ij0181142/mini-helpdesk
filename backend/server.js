@@ -1,47 +1,15 @@
-require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const Ticket = require("./models/Ticket");
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
 
-const dbUrl = process.env.MONGODB_URI;
 const app = express();
 
-const store = MongoStore.create({
-  mongoUrl: dbUrl,
-  crypto: {
-    secret: "mysupersecretcode",
-  },
-  touchAfter: 24 * 3600,
-});
-
-store.on("error", (err) => {
-  console.log("ERROR in MONGO SESSION STORE", err);
-});
-
-const sessionOptions = {
-  store,
-  secret: "mysupersecretcode",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-  },
-};
-
-app.use(session(sessionOptions));
 app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect("mongodb://127.0.0.1:27017/minihelpdesk")
   .then(() => console.log("MongoDB connected"));
 
 app.get("/tickets", async (req, res) => {
